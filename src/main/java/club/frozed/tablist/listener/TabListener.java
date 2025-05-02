@@ -9,6 +9,9 @@ import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerKickEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
 
+/**
+ * @author Ryzeon, Elb1to
+ */
 public class TabListener implements Listener {
 
 	private final FrozedTablist instance;
@@ -40,13 +43,11 @@ public class TabListener implements Listener {
 
 	@EventHandler
 	public void onQuit(PlayerQuitEvent event) {
-		Player player = event.getPlayer();
-		instance.removePlayer(player);
+		instance.removePlayer(event.getPlayer());
 	}
 
 	@EventHandler
 	public void onKick(PlayerKickEvent event) {
-		Player player = event.getPlayer();
-		instance.removePlayer(player);
+		instance.removePlayer(event.getPlayer());
 	}
 }

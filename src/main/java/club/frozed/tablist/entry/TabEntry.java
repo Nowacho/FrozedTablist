@@ -8,11 +8,13 @@ import lombok.Setter;
 import lombok.experimental.Accessors;
 
 /**
- * Created by Ryzeon
- * Project: Hatsur TabAPI
- * Date: 12/10/2020 @ 08:36
+ * @author Ryzeon, Elb1to
  */
-@Accessors(chain = true) @AllArgsConstructor @RequiredArgsConstructor @Getter @Setter
+@Accessors(chain = true)
+@AllArgsConstructor
+@RequiredArgsConstructor
+@Getter
+@Setter
 public class TabEntry {
 
 	private final int column;

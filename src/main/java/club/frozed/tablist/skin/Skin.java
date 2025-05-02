@@ -12,15 +12,15 @@ import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 
-@Getter @AllArgsConstructor
+/**
+ * @author Ryzeon, Elb1to
+ */
+@Getter
+@AllArgsConstructor
 public class Skin {
 
 	public static final String TEXTURE_KEY = "textures";
-
-	private static final List<Skin> DOT_SKINS = Lists.newArrayList();
-	private static final ArrayListMultimap<EntityType, Skin> MOB_SKINS = ArrayListMultimap.create();
 	public static final Map<String, Skin> GENERAL_SKINS = new HashMap<>();
-
 	public static final Skin DISCORD_SKIN;
 	public static final Skin NAMEMC_SKIN;
 	public static final Skin WEBSITE_SKIN;
@@ -29,7 +29,6 @@ public class Skin {
 	public static final Skin YOUTUBE_SKIN;
 	public static final Skin TELEGRAM_SKIN;
 	public static final Skin GOOGLE_SKIN;
-
 	public static final Skin STAR_SKIN;
 	public static final Skin MINECON;
 	public static final Skin GRAPH_SKIN;
@@ -42,15 +41,12 @@ public class Skin {
 	public static final Skin FLAME_SKIN;
 	public static final Skin SOUL_FLAME_SKIN;
 	public static final Skin DOLAR_SKIN;
-
 	public static final Skin PINK_SKIN;
 	public static final Skin OPEN_LOCK;
 	public static final Skin CLOSED_LOCK;
-
 	public static final Skin DEFAULT_SKIN;
-
-	private final String value;
-	public String signature;
+	private static final List<Skin> DOT_SKINS = Lists.newArrayList();
+	private static final ArrayListMultimap<EntityType, Skin> MOB_SKINS = ArrayListMultimap.create();
 
 	static {
 		// Default skin
@@ -406,26 +402,8 @@ public class Skin {
 		GENERAL_SKINS.put("DEFAULT_SKIN", DEFAULT_SKIN);
 	}
 
-	@Override
-	public String toString() {
-		return '(' + this.value + ';' + this.signature + ')';
-	}
-
-	@Override
-	public boolean equals(Object object) {
-		if (object == this) {
-			return (true);
-		} else if (object instanceof Skin) {
-			Skin other = (Skin) object;
-
-			boolean sign = Objects.equals(this.getSignature(), other.getSignature());
-			boolean value = Objects.equals(this.getValue(), other.getValue());
-
-			return ((sign) && (value));
-		}
-
-		return false;
-	}
+	private final String value;
+	public String signature;
 
 	/**
 	 * Get a skin from an entity type.
@@ -465,5 +443,26 @@ public class Skin {
 	 */
 	public static Skin getDot(ChatColor color) {
 		return DOT_SKINS.get(color.ordinal());
+	}
+
+	@Override
+	public String toString() {
+		return '(' + this.value + ';' + this.signature + ')';
+	}
+
+	@Override
+	public boolean equals(Object object) {
+		if (object == this) {
+			return (true);
+		} else if (object instanceof Skin) {
+			Skin other = (Skin) object;
+
+			boolean sign = Objects.equals(this.getSignature(), other.getSignature());
+			boolean value = Objects.equals(this.getValue(), other.getValue());
+
+			return ((sign) && (value));
+		}
+
+		return false;
 	}
 }

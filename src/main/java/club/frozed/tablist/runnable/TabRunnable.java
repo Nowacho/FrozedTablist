@@ -5,21 +5,17 @@ import club.frozed.tablist.entry.TabEntry;
 import club.frozed.tablist.latency.TabLatency;
 import club.frozed.tablist.layout.TabLayout;
 import club.frozed.tablist.skin.Skin;
+import lombok.AllArgsConstructor;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 
 /**
- * Created by Ryzeon
- * Project: TabAPI
- * Date: 11/12/2020 @ 10:08
+ * @author Ryzeon, Elb1to
  */
+@AllArgsConstructor
 public class TabRunnable implements Runnable {
 
 	private final TabAdapter adapter;
-
-	public TabRunnable(TabAdapter adapter) {
-		this.adapter = adapter;
-	}
 
 	@Override
 	public void run() {
