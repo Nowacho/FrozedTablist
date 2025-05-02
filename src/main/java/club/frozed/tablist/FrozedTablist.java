@@ -1,104 +1,40 @@
 package club.frozed.tablist;
 
 import club.frozed.tablist.adapter.TabAdapter;
-import club.frozed.tablist.layout.TabLayout_v1_7;
-import club.frozed.tablist.layout.TabLayout_v1_8;
+import club.frozed.tablist.layout.TabLayout;
 import club.frozed.tablist.listener.TabListener;
-import club.frozed.tablist.packet.TabPacket_v1_7;
-import club.frozed.tablist.packet.TabPacket_v1_8;
-import club.frozed.tablist.runnable.TabRunnable_v1_7;
-import club.frozed.tablist.runnable.TabRunnable_v1_8;
-import lombok.Getter;
+import club.frozed.tablist.packet.TabPacket;
+import club.frozed.tablist.runnable.TabRunnable;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
 
-@Getter
 public class FrozedTablist {
 
-    /*
-    Forked from Hatsur API
-    Links:
-    -> https://github.com/norxir/seventab
-    -> https://github.com/norxir/eighttab
-     */
+	private final TabAdapter adapter;
 
-    @Getter private static FrozedTablist instance;
+	public FrozedTablist(JavaPlugin plugin, TabAdapter adapter, int delay1, int delay2) {
+		this.adapter = adapter;
 
-    private final TabAdapter adapter;
+		new TabPacket(plugin);
+		plugin.getServer().getPluginManager().registerEvents(new TabListener(this), plugin);
+		plugin.getServer().getScheduler().runTaskTimerAsynchronously(plugin, new TabRunnable(adapter), delay1, delay2);
+	}
 
-    private Version version;
+	public TabAdapter getAdapter() {
+		return adapter;
+	}
 
-    public FrozedTablist(JavaPlugin plugin, TabAdapter adapter, int delay1, int delay2) {
-        instance = this;
-        this.adapter = adapter;
+	public void onDisable() {
+		for (Player player : Bukkit.getServer().getOnlinePlayers()) {
+			removePlayer(player);
+		}
+	}
 
-        String packageName = Bukkit.getServer().getClass().getPackage().getName();
-        String version = packageName.substring(packageName.lastIndexOf('.') + 1);
-        try {
-            this.version = Version.valueOf(version);
-            plugin.getLogger().info("[Tab] Using " + this.version.name() + " version.");
-        } catch (final Exception e) {
-            e.printStackTrace();
-            return;
-        }
-
-        handlerPacket(plugin);
-
-        Bukkit.getServer().getPluginManager().registerEvents(new TabListener(this), plugin);
-        switch (this.version) {
-            case v1_7_R4:
-                Bukkit.getServer().getScheduler().runTaskTimerAsynchronously(plugin, new TabRunnable_v1_7(adapter), delay1, delay2); //TODO: async to run 1 millis
-                break;
-            case v1_8_R3:
-                Bukkit.getServer().getScheduler().runTaskTimerAsynchronously(plugin, new TabRunnable_v1_8(adapter), delay1, delay2); //TODO: async to run 1 millis
-                break;
-        }
-    }
-
-    private void handlerPacket(JavaPlugin plugin) {
-        switch (this.version) {
-            case v1_7_R4:
-                new TabPacket_v1_7(plugin);
-                break;
-            case v1_8_R3:
-                new TabPacket_v1_8(plugin);
-                break;
-        }
-    }
-
-    public void onDisable() {
-        for (Player player : Bukkit.getServer().getOnlinePlayers()) {
-            removePlayer(player);
-        }
-    }
-
-    public void removePlayer(Player player) {
-        boolean continueAt = false;
-        switch (this.version) {
-            case v1_7_R4:
-                if (TabLayout_v1_7.getLayoutMapping().containsKey(player.getUniqueId())) {
-                    continueAt = true;
-                }
-
-                if (continueAt) {
-                    TabLayout_v1_7.getLayoutMapping().remove(player.getUniqueId());
-                }
-                break;
-            case v1_8_R3:
-                if (TabLayout_v1_8.getLayoutMapping().containsKey(player.getUniqueId())) {
-                    continueAt = true;
-                }
-
-                if (continueAt) {
-                    TabLayout_v1_8.getLayoutMapping().remove(player.getUniqueId());
-                }
-                break;
-        }
-    }
-
-    public enum Version {
-        v1_7_R4,
-        v1_8_R3
-    }
+	public void removePlayer(Player player) {
+		boolean continueAt = TabLayout.getLayoutMapping().containsKey(player.getUniqueId());
+		if (continueAt) {
+			TabLayout.getLayoutMapping().remove(player.getUniqueId());
+		}
+	}
 }
