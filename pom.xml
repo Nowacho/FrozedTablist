@@ -5,18 +5,17 @@
     <modelVersion>4.0.0</modelVersion>
 
     <artifactId>FrozedTablist</artifactId>
-    <groupId>club.frozed.tablist</groupId>
-    <version>1.0-SNAPSHOT-R0-1.8</version>
-    <description>1.8 Spigot Branch</description>
+    <groupId>club.frozed</groupId>
+    <version>2.0.0</version>
 
     <repositories>
         <repository>
-            <id>viaversion-repo</id>
-            <url>https://repo.viaversion.com</url>
+            <id>codemc-releases</id>
+            <url>https://repo.codemc.io/repository/maven-releases/</url>
         </repository>
         <repository>
-            <id>dmulloy2-repo</id>
-            <url>https://repo.dmulloy2.net/repository/public/</url>
+            <id>codemc-snapshots</id>
+            <url>https://repo.codemc.io/repository/maven-snapshots/</url>
         </repository>
     </repositories>
 
@@ -33,7 +32,15 @@
         <dependency>
             <groupId>org.projectlombok</groupId>
             <artifactId>lombok</artifactId>
-            <version>1.18.22</version>
+            <version>1.18.36</version>
+            <scope>provided</scope>
+        </dependency>
+
+        <!-- PacketEvents -->
+        <dependency>
+            <groupId>com.github.retrooper</groupId>
+            <artifactId>packetevents-spigot</artifactId>
+            <version>2.7.0</version>
             <scope>provided</scope>
         </dependency>
 
@@ -59,7 +66,7 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-shade-plugin</artifactId>
-                <version>2.1</version>
+                <version>3.6.0</version>
                 <executions>
                     <execution>
                         <phase>package</phase>
