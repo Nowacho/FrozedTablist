@@ -11,26 +11,26 @@ import java.util.List;
 public interface TabAdapter {
 
 	/**
-	 * Get the tab header for a player.
+	 * Get the tab header lines for a player.
 	 *
 	 * @param player the player
-	 * @return string
+	 * @return list of strings for header lines
 	 */
-	String getHeader(Player player);
+	List<String> getHeader(Player player);
 
 	/**
-	 * Get the tab player for a player.
+	 * Get the tab footer lines for a player.
 	 *
 	 * @param player the player
-	 * @return string
+	 * @return list of strings for footer lines
 	 */
-	String getFooter(Player player);
+	List<String> getFooter(Player player);
 
 	/**
 	 * Get the tab lines for a player.
 	 *
 	 * @param player the player
-	 * @return map
+	 * @return list of tab entries
 	 */
 	List<TabEntry> getLines(Player player);
 }

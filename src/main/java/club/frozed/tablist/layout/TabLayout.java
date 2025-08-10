@@ -30,6 +30,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import java.util.UUID;
+import java.util.stream.Collectors;
 
 import static club.frozed.tablist.skin.Skin.TEXTURE_KEY;
 
@@ -56,8 +57,16 @@ public class TabLayout {
 	public void setHeaderAndFooter() {
 		boolean continueAt = this.packetAPI.getPlayerManager().getClientVersion(player).isNewerThanOrEquals(ClientVersion.V_1_8);
 		if (continueAt) {
-			String header = (ChatColor.translateAlternateColorCodes('&', instance.getAdapter().getHeader(player)));
-			String footer = (ChatColor.translateAlternateColorCodes('&', instance.getAdapter().getFooter(player)));
+			List<String> headerLines = instance.getAdapter().getHeader(player);
+			List<String> footerLines = instance.getAdapter().getFooter(player);
+
+			String header = headerLines.stream()
+					.map(line -> ChatColor.translateAlternateColorCodes('&', line))
+					.collect(Collectors.joining("\n"));
+
+			String footer = footerLines.stream()
+					.map(line -> ChatColor.translateAlternateColorCodes('&', line))
+					.collect(Collectors.joining("\n"));
 
 			WrapperPlayServerPlayerListHeaderAndFooter packet = new WrapperPlayServerPlayerListHeaderAndFooter(
 					Component.text(header),
