@@ -1,6 +1,6 @@
 package club.frozed.tablist;
 
-import club.frozed.tablist.adapter.TabAdapter;
+import club.frozed.tablist.adapter.TabProvider;
 import club.frozed.tablist.layout.TabLayout;
 import club.frozed.tablist.listener.TabListener;
 import club.frozed.tablist.packet.TabPacketListener;
@@ -18,15 +18,15 @@ import org.bukkit.plugin.java.JavaPlugin;
 @Getter
 public class FrozedTablist {
 
-	private final TabAdapter adapter;
+	private final TabProvider provider;
 
-	public FrozedTablist(JavaPlugin plugin, TabAdapter adapter, int delay, int period) {
-		this.adapter = adapter;
+	public FrozedTablist(JavaPlugin plugin, TabProvider provider, int delay, int period) {
+		this.provider = provider;
 
 		PacketEvents.getAPI().getEventManager().registerListener(new TabPacketListener(), PacketListenerPriority.NORMAL);
 
 		plugin.getServer().getPluginManager().registerEvents(new TabListener(this), plugin);
-		plugin.getServer().getScheduler().runTaskTimerAsynchronously(plugin, new TabRunnable(adapter), delay, period);
+		plugin.getServer().getScheduler().runTaskTimerAsynchronously(plugin, new TabRunnable(provider), delay, period);
 	}
 
 	public void onDisable() {

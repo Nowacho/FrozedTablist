@@ -1,6 +1,6 @@
 package club.frozed.tablist.runnable;
 
-import club.frozed.tablist.adapter.TabAdapter;
+import club.frozed.tablist.adapter.TabProvider;
 import club.frozed.tablist.entry.TabEntry;
 import club.frozed.tablist.latency.TabLatency;
 import club.frozed.tablist.layout.TabLayout;
@@ -15,7 +15,7 @@ import org.bukkit.entity.Player;
 @AllArgsConstructor
 public class TabRunnable implements Runnable {
 
-	private final TabAdapter adapter;
+	private final TabProvider provider;
 
 	@Override
 	public void run() {
@@ -23,13 +23,13 @@ public class TabRunnable implements Runnable {
 			if (TabLayout.getLayoutMapping().containsKey(player.getUniqueId())) {
 				TabLayout layout = TabLayout.getLayoutMapping().get(player.getUniqueId());
 
-				for (TabEntry entry : adapter.getLines(player)) {
+				for (TabEntry entry : provider.getLines(player)) {
 					layout.update(entry.getColumn(), entry.getRow(), entry.getText(), entry.getPing(), entry.getSkin());
 				}
 
 				for (int row = 0; row < 20; row++) {
 					for (int column = 0; column < 3; column++) {
-						if (layout.getByLocation(adapter.getLines(player), column, row) == null) {
+						if (layout.getByLocation(provider.getLines(player), column, row) == null) {
 							layout.update(column, row, "", TabLatency.NO_BAR.getValue(), Skin.DEFAULT_SKIN);
 						}
 					}

@@ -57,8 +57,8 @@ public class TabLayout {
 	public void setHeaderAndFooter() {
 		boolean continueAt = this.packetAPI.getPlayerManager().getClientVersion(player).isNewerThanOrEquals(ClientVersion.V_1_8);
 		if (continueAt) {
-			List<String> headerLines = instance.getAdapter().getHeader(player);
-			List<String> footerLines = instance.getAdapter().getFooter(player);
+			List<String> headerLines = instance.getProvider().getHeader(player);
+			List<String> footerLines = instance.getProvider().getFooter(player);
 
 			String header = headerLines.stream()
 					.map(line -> ChatColor.translateAlternateColorCodes('&', line))

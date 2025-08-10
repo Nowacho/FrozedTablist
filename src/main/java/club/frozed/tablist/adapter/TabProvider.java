@@ -8,7 +8,7 @@ import java.util.List;
 /**
  * @author Ryzeon, Elb1to
  */
-public interface TabAdapter {
+public interface TabProvider {
 
 	/**
 	 * Get the tab header lines for a player.
